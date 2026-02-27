@@ -37,3 +37,23 @@
 
 ## Установка и запуск проекта
 ## Использование-проекта
+
+## Правила именования
+
+### Ветки
+`<временная_ветка>/<область>-<описание>`
+- Временные_ветки: features, bugfix, hotfix, release
+- Области: analysis, backend, frontend, devops, docs, deps, core
+- Пример: `features/analysis-train-model`
+
+### Коммиты
+`<тип>(<область>): <описание>`
+- Типы: feat, fix, docs, style, refactor, test, chore
+- Области: analysis, backend, frontend, devops, docs, deps, core
+- Пример: `feat(analysis): добавить модель CNN`
+
+### Pull Request
+`<тип>(<область>): <описание>`
+- Типы: feat, fix, docs, style, refactor, test, chore
+- Области: analysis, backend, frontend, devops, docs, deps, core
+- Пример: `feat(backend): обучение CNN модели`
