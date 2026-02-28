@@ -25,7 +25,7 @@ jobs:
             echo "Области: analysis, backend, frontend, devops, docs, deps, test, core"
             echo "Пример: features/analysis-train-model"
             echo ""
-            echo "Обратите внимание! После «:» обязателен пробел"
+            echo "Обратите внимание!"
             echo "• После префикса обязателен слеш /"
             echo "• После области обязателен дефис -"
             echo "• Описание должно содержать хотя бы один символ"
@@ -45,15 +45,14 @@ jobs:
           PR_TITLE="${{ github.event.pull_request.title }}"
           echo "Проверяем название PR: $PR_TITLE"
           
-          if [[ ! "$PR_TITLE" =~ ^(feat|fix|style|refactor|chore)\((analysis|backend|frontend|devops|docs|deps|test|core)\):\ .+$ ]]; then
+          if [[ ! "$PR_TITLE" =~ ^(feat|fix|style|refactor|chore)/(analysis|backend|frontend|devops|docs|deps|test|core).+$ ]]; then
             echo "❌ Ошибка: Неправильный формат названия PR"
-            echo "Формат: <тип>(<область>): <описание>"
+            echo "Формат: <тип>/<область> <описание>"
             echo "Типы: feat, fix, style, refactor, chore"
             echo "Область: analysis, backend, frontend, devops, docs, deps, test, core"
-            echo "Пример: feat(analysis): обучение CNN модели"
+            echo "Пример: feat/analysis: обучение CNN модели"
             echo ""
             echo "Обратите внимание!"
-            echo "• После «:» обязателен пробел"
             echo "• Описание должно содержать хотя бы один символ"
             echo ""
             exit 1
