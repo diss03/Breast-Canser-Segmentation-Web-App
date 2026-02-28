@@ -1,0 +1,85 @@
+name: Проверка Git соглашений
+
+on:
+  push:
+    branches-ignore:
+      - main
+      - develop
+  pull_request:
+    types: [opened, edited, synchronize]
+
+jobs:
+  check-branch-name:
+    name: Проверка имени ветки
+    runs-on: ubuntu-latest
+    steps:
+      - name: Проверить имя ветки
+        run: |
+          BRANCH_NAME="${GITHUB_REF#refs/heads/}"
+          echo "Проверяем ветку: $BRANCH_NAME"
+          
+          if [[ ! "$BRANCH_NAME" =~ ^(features|bugfix|hotfix|release)/ ]]; then
+            echo "❌ Ошибка: Ветка должна начинаться с features/, bugfix/, hotfix/ или release/"
+            exit 1
+          else
+            echo "✅ Название ветки корректно"
+          fi
+
+  check-pr-title:
+    name: Проверка названия PR
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Проверить название PR
+        run: |
+          PR_TITLE="${{ github.event.pull_request.title }}"
+          echo "Проверяем название PR: $PR_TITLE"
+          
+          if [[ ! "$PR_TITLE" =~ ^\[(FEAT|FIX|DOCS|STYLE|REFACTOR|TEST|CHORE|RELEASE)\]\ .+ ]]; then
+            echo "❌ Ошибка: Неправильный формат названия PR"
+            echo "Формат: [ТИП] область: описание v.версия"
+            echo "Типы: FEAT, FIX, DOCS, STYLE, REFACTOR, TEST, CHORE, RELEASE"
+            echo "Пример: [FEAT] analysis: обучение CNN модели v.0.1"
+            exit 1
+          else
+            echo "✅ Название PR корректно"
+          fi
+
+  check-commit-messages:
+    name: Проверка сообщений коммитов
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      
+      - name: Проверить сообщения коммитов
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            COMMITS=$(git log --format=%s origin/${{ github.base_ref }}..HEAD)
+          else
+            COMMITS=$(git log --format=%s -n 5)
+          fi
+          
+          echo "Проверяем коммиты:"
+          echo "$COMMITS"
+          echo ""
+          
+          ERROR=0
+          while IFS= read -r commit; do
+            if [[ ! "$commit" =~ ^(feat|fix|docs|style|refactor|test|chore)\((analysis|backend|frontend|devops|deps|core)\):\ .+ ]]; then
+              echo "❌ Ошибка в коммите: $commit"
+              echo "   Формат: <тип>(<область>): <описание>"
+              echo "   Типы: feat, fix, docs, style, refactor, test, chore"
+              echo "   Области: analysis, backend, frontend, devops, deps, core"
+              echo "   Пример: feat(analysis): добавить модель CNN"
+              echo ""
+              ERROR=1
+            fi
+          done <<< "$COMMITS"
+          
+          if [ $ERROR -eq 1 ]; then
+            exit 1
+          else
+            echo "✅ Все коммиты корректны"
+          fi
