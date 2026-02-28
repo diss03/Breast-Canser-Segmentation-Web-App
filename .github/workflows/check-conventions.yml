@@ -18,7 +18,7 @@ jobs:
           BRANCH_NAME="${GITHUB_REF#refs/heads/}"
           echo "Проверяем ветку: $BRANCH_NAME"
           
-          if [[ ! "$BRANCH_NAME" =~ ^(feature|bugfix|hotfix|release)/(analysis|backend|frontend|devops|docs|deps|test|core)-.+$ ]]; then
+          if [[ ! "$BRANCH_NAME" =~ ^(feature|bugfix)/(analysis|backend|frontend|devops|docs|deps|test|core)-.+$|^release/.+$|^hotfix/.+$ ]]; then
             echo "❌ Ошибка: Неправильный формат названия временной ветки"
             echo "Формат: <временная_ветка>/<область>-<описание>`"
             echo "Временные_ветки: feature, bugfix, hotfix, release"
