@@ -47,10 +47,10 @@
 - Пример: `features/analysis-train-model`
 
 ### Коммиты
-`<тип>(<область>): <описание>`
-- Типы: feat, fix, style, refactor, chore
-- Области: analysis, backend, frontend, devops, docs, deps, test, core
-- Пример: `feat(analysis): добавить модель CNN`
+1.  **Повелительное наклонение** (Imperative Mood): `add`, а не `added` или `adds`
+2.  **Без точки** в конце описания
+3.  **Нижний регистр** после типа (кроме собственных имён)
+4.  **Краткость**: до 72 символов в первой строке
 
 ### Pull Request
 `<тип>(<область>): <описание>`
