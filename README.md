@@ -42,18 +42,18 @@
 
 ### Ветки
 `<временная_ветка>/<область>-<описание>`
-- Временные_ветки: features, bugfix, hotfix, release
-- Области: analysis, backend, frontend, devops, docs, deps, core
+- Временные_ветки: feature, bugfix, hotfix, release
+- Области: analysis, backend, frontend, devops, docs, deps, test, core
 - Пример: `features/analysis-train-model`
 
 ### Коммиты
 `<тип>(<область>): <описание>`
-- Типы: feat, fix, docs, style, refactor, test, chore
-- Области: analysis, backend, frontend, devops, docs, deps, core
+- Типы: feat, fix, style, refactor, chore
+- Области: analysis, backend, frontend, devops, docs, deps, test, core
 - Пример: `feat(analysis): добавить модель CNN`
 
 ### Pull Request
 `<тип>(<область>): <описание>`
-- Типы: feat, fix, docs, style, refactor, test, chore
-- Области: analysis, backend, frontend, devops, docs, deps, core
+- Типы: feat, fix, style, refactor, chore
+- Области: analysis, backend, frontend, devops, docs, deps, test, core
 - Пример: `feat(backend): обучение CNN модели`
